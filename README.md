@@ -31,6 +31,8 @@ The Vue 3 Bootcamp - The Complete Developer Guide 수업을 듣고 만든 간단
 - Scroll Based Pagination
 ---
 ### 🌲Env...
+- Node.js : 18.0.0
+- npm : 8.15.0
 - Vue 3.4.15
 - Pinia: 2.1.7
 - vue-router : 4.2.5
