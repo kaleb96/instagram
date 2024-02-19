@@ -139,7 +139,7 @@ export const useUserStore = defineStore('user', () => {
         
         if(!data.user)  {
             loadingUser.value = false;
-            return user.value =null
+            return user.value = null;
         }
 
         const {data: userWithEmail} = await supabase
@@ -157,7 +157,14 @@ export const useUserStore = defineStore('user', () => {
         loadingUser.value = false;
     }
 
-    const handleLogout = () => {}
+    //5. Logout
+    const handleLogout =async () => {
+
+        await supabase.auth.signOut()
+        user.value = null;
+    }
+
+    //6. clearErrorMessage
     const clearErrorMessage = () => {
         errorMessage.value = '';
     }
