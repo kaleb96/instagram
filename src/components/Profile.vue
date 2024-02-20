@@ -8,6 +8,7 @@ import ImageGallary from './ImageGallary.vue'
     <Container>
         <div class="profile-container">
             <UserBar 
+                :key="$route.params.username"
                 username="RachelGreen"
                 :userInfo="{
                     posts: 4,
