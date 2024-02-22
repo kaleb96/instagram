@@ -7,22 +7,29 @@ import { storeToRefs } from 'pinia';
 
 const route = useRoute();
 const userStore = useUserStore();
-
 const { user } = storeToRefs(userStore)
 const { username: profileUsername } = route.params
 
-const props = defineProps(['username','userInfo']);
+const props = defineProps(['user','userInfo', 'addNewPost']);
 </script>
 <template>
-    <div class="userbar-container">
+    
+    <div class="userbar-container" v-if="props.user">
         <div class="top-content">
-            <a-typography-title :level="3">{{ props.username }}</a-typography-title>
-            <UploadPhotoModal v-if="user && (profileUsername === user.username) "/>
+            <a-typography-title :level="3">{{ props.user.username }}</a-typography-title>
+            <UploadPhotoModal v-if="user && (profileUsername === user.username)"
+                :addNewPost="addNewPost"
+            />
         </div>
         <div class="bottom-content">
             <a-typography-title :level="5">{{props.userInfo.posts}} posts</a-typography-title>
             <a-typography-title :level="5">{{props.userInfo.followers}} followers</a-typography-title>
             <a-typography-title :level="5">{{props.userInfo.following}} following</a-typography-title>
+        </div>
+    </div>
+    <div class="userbar-container" v-else>
+        <div class="top-content">
+            <a-typography-title :level="3">User not Found</a-typography-title>
         </div>
     </div>
 </template>

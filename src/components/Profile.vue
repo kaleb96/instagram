@@ -2,33 +2,70 @@
 import Container from "./Container.vue";
 import UserBar from './UserBar.vue'
 import ImageGallary from './ImageGallary.vue'
+import { ref, onMounted } from 'vue';
+import {useRoute} from 'vue-router';
+import { supabase } from '@/supabase';
+
+const user = ref(null);
+const route = useRoute();
+const { username } = route.params
+const posts = ref([]);
+const loading = ref(false);
+
+const addNewPost = (post) => {
+    posts.value.unshift(post);
+}
+
+const fetchData = async () => {
+    
+    loading.value = true;
+    
+    const { data: userData } = await supabase
+    .from("users")
+    .select()
+    .eq("username", username)
+    .single();
+    // console.log({response});         
+
+    if(!userData) {
+        loading.value = false;
+        return user.value = null;
+    }
+
+    user.value = userData;
+ 
+    const { data: postData} = await supabase
+    .from('posts')
+    .select()
+    .eq('owner_id',user.value.id);
+
+    posts.value = postData;
+
+    loading.value = false;
+}
+
+onMounted(() => {
+    fetchData()
+})
 </script>
 
 <template>
     <Container>
-        <div class="profile-container">
+        <div class="profile-container" v-if="!loading">
             <UserBar 
                 :key="$route.params.username"
-                username="RachelGreen"
+                :user="user"
                 :userInfo="{
                     posts: 4,
                     followers: 200,
                     following: 300,
                 }"
+                :addNewPost="addNewPost"
             />
-           <ImageGallary
-                :posts="[
-                    {
-                        id: 1,
-                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6rxSaMZAL4u6Td3OAHXU3yCjqElgmQZylzc5yf8LCkrVoOBxzeIGg9PaQtr7TeDKDy3I&usqp=CAU',
-
-                    },
-                    {
-                        id: 2,
-                        image: 'https://imgix.bustle.com/uploads/image/2022/11/17/dc2648bf-a757-444c-b04a-16688dd7da5b-videoscreenshot-hbo-s5e21theonewiththeball-334.jpg?w=300&h=400&fit=crop&crop=faces&auto=format%2Ccompress'
-                    }
-                ]"
-           />  
+           <ImageGallary :posts="posts"/>  
+        </div>
+        <div v-else class="spinner">
+            <a-spin size="large"/>
         </div>
     </Container>
 </template>
@@ -38,5 +75,11 @@ import ImageGallary from './ImageGallary.vue'
     /* background-color: aquamarine; */
     align-items: center;
     padding: 20px 0;
+}
+.spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85vh
 }
 </style>
