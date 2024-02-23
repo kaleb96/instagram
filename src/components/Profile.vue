@@ -2,7 +2,7 @@
 import Container from "./Container.vue";
 import UserBar from './UserBar.vue'
 import ImageGallary from './ImageGallary.vue'
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, reactive } from 'vue';
 import {useRoute} from 'vue-router';
 import { supabase } from '@/supabase';
 import { useUserStore } from "@/stores/users";
@@ -17,7 +17,11 @@ const loading = ref(false);
 const isFollowing = ref(false);
 const userStore = useUserStore();
 const { user: loggedInUser } = storeToRefs(userStore);
-
+const userInfo = reactive({
+    posts: null,
+    followers: null,
+    following: null
+})
 
 
 //functions
@@ -53,6 +57,10 @@ const fetchData = async () => {
     posts.value = postData;
 
     await fetchIsFollowing();
+    userInfo.followers = await fetchFollowerCount();
+    userInfo.following = await fetchFollowingCount();
+    userInfo.posts = posts.value.length;
+    
     loading.value = false;
 }
 
@@ -73,6 +81,32 @@ const fetchIsFollowing = async () => {
     
 }
 
+//4. updateIsFollowing
+const updateIsFollowing = (follow) => {
+
+    isFollowing.value = follow
+}
+
+//5. count follower
+const fetchFollowerCount = async() => {
+
+    const {count} = await supabase
+        .from('follower_following')
+        .select('*', { count: 'exact'})
+        .eq('following_id', user.value.id)
+    return count;
+}
+
+//6. count following
+const fetchFollowingCount = async() => {
+
+    const { count } = await supabase
+    .from('follower_following')
+    .select('*', { count: 'exact'})
+    .eq('follower_id', user.value.id) 
+    return count;
+}
+
 watch(loggedInUser, () => {
 
     fetchIsFollowing()   
@@ -89,13 +123,10 @@ onMounted(() => {
             <UserBar 
                 :key="$route.params.username"
                 :user="user"
-                :userInfo="{
-                    posts: 4,
-                    followers: 200,
-                    following: 300,
-                }"
+                :userInfo="userInfo"
                 :addNewPost="addNewPost"
                 :isFollowing="isFollowing"
+                :updateIsFollowing="updateIsFollowing"
             />
            <ImageGallary :posts="posts"/>  
         </div>
