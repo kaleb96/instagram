@@ -4,22 +4,44 @@ import UploadPhotoModal from '@/components/UploadPhotoModal.vue'
 import {useRoute} from 'vue-router';
 import { useUserStore } from '@/stores/users';
 import { storeToRefs } from 'pinia';
+import { supabase } from '@/supabase';
 
+//state
 const route = useRoute();
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore)
 const { username: profileUsername } = route.params
+const props = defineProps(['user','userInfo', 'addNewPost', 'isFollowing']);
 
-const props = defineProps(['user','userInfo', 'addNewPost']);
+// functions
+//1. followUser
+const followUser = async() => {
+
+    const response = await supabase
+        .from('follower_following')
+        .insert({
+            follower_id: user.value.id,
+            following_id: props.user.id
+        })
+    // console.log({response});
+}   
+
 </script>
 <template>
     
     <div class="userbar-container" v-if="props.user">
         <div class="top-content">
             <a-typography-title :level="3">{{ props.user.username }}</a-typography-title>
-            <UploadPhotoModal v-if="user && (profileUsername === user.username)"
-                :addNewPost="addNewPost"
-            />
+            <div v-if="user">
+                <UploadPhotoModal 
+                    v-if="(profileUsername === user.username)"
+                    :addNewPost="addNewPost"
+                />
+                <div v-else>
+                    <a-button v-if="!props.isFollowing" @click="followUser">Follow</a-button>
+                    <a-button v-else>Following</a-button>
+                </div>
+            </div>
         </div>
         <div class="bottom-content">
             <a-typography-title :level="5">{{props.userInfo.posts}} posts</a-typography-title>
