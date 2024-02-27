@@ -6,7 +6,7 @@
 <template>
     <a-card hoverable style="width: 240px" class="card">
       <template #cover>
-        <img alt="post" :src="post.url" />
+        <img alt="post" :src="`https://hemtznujjsqltxercoeq.supabase.co/storage/v1/object/public/images/${post.url}`" />
       </template>
       <a-card-meta :title="post.username">
         <template #description>{{ post.caption }}</template>
