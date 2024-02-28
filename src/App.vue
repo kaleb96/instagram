@@ -14,7 +14,7 @@ onMounted(() => {
 
 <template>
   <main>
-      <Nav/>
+      <Nav />
       <router-view/>
   </main>
 </template>

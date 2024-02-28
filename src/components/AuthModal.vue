@@ -55,7 +55,7 @@ const props = defineProps(['isLogin'])
 <template>
   <div>
     <a-button type="primary" @click="showModal" class="btn">{{ props.isLogin ? 'Login' : 'SignUp' }}</a-button>
-    <a-modal v-model:visible="visible" title="Basic Modal" @ok="handleOk">
+    <a-modal v-model:visible="visible" title="Login" @ok="handleOk">
         <template #footer>
             <a-button key="back" @click="handleCancel">Cancel</a-button>
             <a-button 
