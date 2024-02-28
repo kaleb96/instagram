@@ -46,5 +46,11 @@ The Vue 3 Bootcamp - The Complete Developer Guide 수업을 듣고 만든 간단
 - supabase : 2.39.6
 - IDE : Visual Studio Code
 ---
-### 📝 Project architecture...
+### 📝 Project looks like...
+<img title="profile" src= "https://github.com/kaleb96/instagram/blob/main/watchProfile.jpg" width="450px">
+<img title="login" src="https://github.com/kaleb96/instagram/blob/main/Loginview.jpg" width="450px">
+<img title="watchfollowerPosts" src="https://github.com/kaleb96/instagram/blob/main/getfollowerPosts.jpg" width="450px">
+<img title="DataTables" src="https://github.com/kaleb96/instagram/blob/main/DataTables.jpg" width="450px">
+<img title="Authentication" src="https://github.com/kaleb96/instagram/blob/main/Authentication.jpg" width="450px">
+<img title="storage" src="https://github.com/kaleb96/instagram/blob/main/storage.jpg" width="450px">
 
