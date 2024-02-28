@@ -28,6 +28,5 @@ onMounted(() => {
 .observer {
     height: 30px;
     width: 30px;
-    background-color: aqua;
 }
 </style>
