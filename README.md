@@ -11,6 +11,12 @@ The Vue 3 Bootcamp - The Complete Developer Guide 수업을 듣고 만든 간단
 - follow people
 - chatting, liking, comments, stories
 ---
+### ✨ Features...
+- Authentication
+- PostgreSQL(SUPABASE)
+- Scrolled-based-paging(Intersection Observer API)
+- Design(ant-design-vue)
+---
 ### ⏲️ learning time...
 - ### 1048min
 - An Introduction to Vue
