@@ -35,7 +35,7 @@ const goUserProfile = () => {
 </script>
 
 <template>
-    <a-layout-header>
+    <a-layout-header class="layout">
         <Container>
            <div class="nav-container">
                 <div class="right-content">
@@ -64,6 +64,10 @@ const goUserProfile = () => {
 
 
 <style scoped>
+.layout {
+    width: 100%;
+    min-width:1072px;
+}
 .nav-container {
     display: flex;
     justify-content: space-between;
