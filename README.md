@@ -5,7 +5,7 @@ The Vue 3 Bootcamp - The Complete Developer Guide 수업을 듣고 만든 간단
 ### 🖥️ About Project...
 - Timeline
 - Profile
-- Loing & Sign up
+- Loginn & Sign up
 - Upload Images
 - View other people's images
 - follow people
